@@ -2,8 +2,8 @@ package models
 
 // User represents a user of the system.
 type User struct {
-	ID   string `json:"id"` // uuid
-	Name string `json:"name"`
+	ID   string `json:"id" bson:"_id"` // uuid
+	Name string `json:"name" bson:"name"`
 }
 
 // NewUser creates a new user.

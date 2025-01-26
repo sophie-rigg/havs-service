@@ -2,6 +2,7 @@ package exposuresummary
 
 import (
 	"encoding/json"
+	"github.com/gorilla/mux"
 	"github.com/sophie-rigg/havs-service/models"
 	"github.com/sophie-rigg/havs-service/storage"
 	"net/http"
@@ -32,21 +33,23 @@ func (c *Handler) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 }
 
 func (c *Handler) Get(writer http.ResponseWriter, request *http.Request) {
-	requestVars := request.URL.Query()
+	requestVars := mux.Vars(request)
 
-	userID := requestVars.Get("userId")
-	if userID == "" {
+	userID, ok := requestVars["userId"]
+	if !ok {
 		http.Error(writer, "missing userId", http.StatusBadRequest)
 		return
 	}
 
-	startingAt := requestVars.Get("starting_at")
+	query := request.URL.Query()
+
+	startingAt := query.Get("starting_at")
 	if startingAt == "" {
 		http.Error(writer, "missing startTime", http.StatusBadRequest)
 		return
 	}
 
-	endingAt := requestVars.Get("ending_at")
+	endingAt := query.Get("ending_at")
 	if endingAt == "" {
 		http.Error(writer, "missing endTime", http.StatusBadRequest)
 		return
@@ -78,4 +81,5 @@ func (c *Handler) Get(writer http.ResponseWriter, request *http.Request) {
 		http.Error(writer, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	writer.WriteHeader(http.StatusOK)
 }

@@ -75,8 +75,7 @@ func (c *Handler) Post(writer http.ResponseWriter, request *http.Request) {
 
 	// could be a bad request, but we still want to save the exposure
 	// so we can recover from the error
-	// TODO: implement recovery method
-	// would need to add option to provide a Exposure ID to the request
+	// TODO: implement recovery method i.e update
 	if exposure.Equipment != nil && exposure.Equipment.ID != "" {
 		equipment, err := c.storage.GetEquipmentItem(exposure.Equipment.ID)
 		if err != nil {
@@ -100,7 +99,7 @@ func (c *Handler) Post(writer http.ResponseWriter, request *http.Request) {
 		exposure.SetUser(user)
 	}
 
-	err = c.storage.UpsertExposure(exposure)
+	err = c.storage.InsertExposure(exposure)
 	if err != nil {
 		http.Error(writer, err.Error(), http.StatusInternalServerError)
 		return

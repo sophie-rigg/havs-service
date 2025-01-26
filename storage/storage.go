@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+//go:generate mockgen -destination=mocks/mock_client.go -package=mocks -source=storage.go
 type Client interface {
 	GetEquipmentItem(id string) (*models.EquipmentItem, error)
 	GetUser(id string) (*models.User, error)
@@ -12,5 +13,5 @@ type Client interface {
 	GetExposuresByUserID(userID string, startTime, endTime time.Time) ([]*models.Exposure, error)
 	GetExposures() ([]*models.Exposure, error)
 
-	UpsertExposure(exposure *models.Exposure) error
+	InsertExposure(exposure *models.Exposure) error
 }

@@ -12,8 +12,9 @@ func PartialExposureA8(vibrationMagnitude float64, triggerTime int) float64 {
 
 // PartialExposurePoints calculates the exposure points of a user based on the vibration magnitude and trigger time.
 func PartialExposurePoints(vibrationMagnitude float64, triggerTime int) float64 {
-	points := math.Pow(vibrationMagnitude/2.5, 2) * (((float64(triggerTime) / 60) / 8) * 100)
-	return math.Round(points)
+	// I have removed the round function from the original code
+	// the examples for the points include decimals
+	return math.Pow(vibrationMagnitude/2.5, 2) * (((float64(triggerTime) / 60) / 8) * 100)
 }
 
 func GenerateUUID() (string, error) {

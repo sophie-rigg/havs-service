@@ -2,9 +2,9 @@ package models
 
 // ExposureSummary represents a summary of an exposure.
 type ExposureSummary struct {
-	A8     float64 `json:"a8"`
-	Points float64 `json:"points"`
-	User   *User   `json:"user"`
+	A8     float64 `json:"a8" bson:"a8"`
+	Points float64 `json:"points" bson:"points"`
+	User   *User   `json:"user" bson:"user"`
 }
 
 // NewExposureSummary creates a new exposure summary.
